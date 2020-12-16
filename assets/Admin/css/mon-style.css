@@ -1,0 +1,22 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 2 mars 2019, 18:09:24
+    Author     : DELL
+*/
+
+.bg-inscription {
+    /*background-image: url('../img/bg-img/thumbs/bg-img-3.jpg');*/
+    background-color: #666e76;
+}
+
+.style-error{
+    border-color: #f74545;
+}
+
+.btn-sup-locataire{
+    
+}

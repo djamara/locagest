@@ -1,0 +1,654 @@
+-- --------------------------------------------------------
+-- Hôte :                        localhost
+-- Version du serveur:           10.1.38-MariaDB - mariadb.org binary distribution
+-- SE du serveur:                Win64
+-- HeidiSQL Version:             10.2.0.5599
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+
+-- Listage de la structure de la base pour locagest_new
+CREATE DATABASE IF NOT EXISTS `locagest_new` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `locagest_new`;
+
+-- Listage de la structure de la table locagest_new. bien
+CREATE TABLE IF NOT EXISTS `bien` (
+  `idbien` int(11) NOT NULL AUTO_INCREMENT,
+  `bienLibelle` varchar(100) DEFAULT NULL,
+  `bienLocalisation` varchar(45) DEFAULT NULL,
+  `bienDateCreation` date DEFAULT NULL,
+  `bienNomProprietaire` varchar(150) DEFAULT NULL,
+  `Personne_idPersonne` int(11) NOT NULL,
+  `TypeBien_idTypeBien` int(11) NOT NULL,
+  `Immeubles_idImmeubles` int(11) DEFAULT NULL,
+  `feuilleCadastrale` varchar(150) DEFAULT NULL,
+  `parcelleCadastrale` varchar(150) DEFAULT NULL,
+  `categorieCadastrale` varchar(150) DEFAULT NULL,
+  `valeurLocataiveCadastrale` varchar(150) DEFAULT NULL,
+  `lot` varchar(150) DEFAULT NULL,
+  `millieme` varchar(150) DEFAULT NULL,
+  `parking` varchar(150) DEFAULT NULL,
+  `autresDependance` varchar(150) DEFAULT NULL,
+  `cave` varchar(150) DEFAULT NULL,
+  `typeLocation` varchar(50) DEFAULT NULL,
+  `loyerHC` decimal(10,0) DEFAULT NULL,
+  `charges` decimal(10,0) DEFAULT NULL,
+  `taxeHabitation` varchar(50) DEFAULT NULL,
+  `taxeFonciere` varchar(50) DEFAULT NULL,
+  `dateAcquisition` date DEFAULT NULL,
+  `prixAcquisition` decimal(10,0) DEFAULT NULL,
+  `fraisAcquisition` decimal(10,0) DEFAULT NULL,
+  `nomCentreiImpot` varchar(50) DEFAULT NULL,
+  `adresse1CentreImpot` varchar(50) DEFAULT NULL,
+  `adresse2CentreImpot` varchar(50) DEFAULT NULL,
+  `codePostale` varchar(50) DEFAULT NULL,
+  `ville` varchar(50) DEFAULT NULL,
+  `description` text,
+  `notes` text,
+  `libAssurance` text,
+  `dateSouscriptionAssurance` date DEFAULT NULL,
+  `dateEcheanceAssurance` date DEFAULT NULL,
+  `nbChambre` int(11) DEFAULT NULL,
+  `nbSalleBain` int(11) DEFAULT NULL,
+  `topActif` int(1) DEFAULT '1' COMMENT '1 actif / 0 inactif',
+  PRIMARY KEY (`idbien`,`Personne_idPersonne`,`TypeBien_idTypeBien`),
+  KEY `fk_bien_Personne_idx` (`Personne_idPersonne`),
+  KEY `fk_bien_TypeBien1_idx` (`TypeBien_idTypeBien`),
+  KEY `fk_bien_Immeubles1_idx` (`Immeubles_idImmeubles`),
+  CONSTRAINT `fk_bien_Immeubles1` FOREIGN KEY (`Immeubles_idImmeubles`) REFERENCES `immeubles` (`idImmeubles`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_bien_Personne` FOREIGN KEY (`Personne_idPersonne`) REFERENCES `personne` (`idPersonne`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_bien_TypeBien1` FOREIGN KEY (`TypeBien_idTypeBien`) REFERENCES `typebien` (`idTypeBien`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+
+-- Listage des données de la table locagest_new.bien : ~8 rows (environ)
+/*!40000 ALTER TABLE `bien` DISABLE KEYS */;
+REPLACE INTO `bien` (`idbien`, `bienLibelle`, `bienLocalisation`, `bienDateCreation`, `bienNomProprietaire`, `Personne_idPersonne`, `TypeBien_idTypeBien`, `Immeubles_idImmeubles`, `feuilleCadastrale`, `parcelleCadastrale`, `categorieCadastrale`, `valeurLocataiveCadastrale`, `lot`, `millieme`, `parking`, `autresDependance`, `cave`, `typeLocation`, `loyerHC`, `charges`, `taxeHabitation`, `taxeFonciere`, `dateAcquisition`, `prixAcquisition`, `fraisAcquisition`, `nomCentreiImpot`, `adresse1CentreImpot`, `adresse2CentreImpot`, `codePostale`, `ville`, `description`, `notes`, `libAssurance`, `dateSouscriptionAssurance`, `dateEcheanceAssurance`, `nbChambre`, `nbSalleBain`, `topActif`) VALUES
+	(13, 'Villa 3 pièces', 'Cocody Angré', '2015-10-05', 'ETOUMI Aristide', 21, 5, 1, 'Feuille', 'Parcelle', 'catégorie', NULL, '245', '150', '5', NULL, 'Inexistant', NULL, 25000, 15000, '5000', '1500', '2015-11-10', 150000, 100000, 'Centre Impot', 'Plateau', 'Cocody', '0025', 'Abidjan', 'Petite description', 'Rien à signaler', 'Assurance maladie universelle', '2017-07-06', '2027-07-05', NULL, NULL, 1),
+	(14, 'Appart BLESSING OF GOD', 'Cocody riviera', '2019-03-05', 'Djamara Edjuhe Cyrille', 23, 1, NULL, '', '', '', NULL, '', '', 'parking sous terrain', NULL, '', NULL, 170000, 0, '', '', '0000-00-00', 0, 0, '', '', '', '01 BP 1346 ABJ 01', '', '', '', 'ASSURANCE INCENDIE', '2019-03-01', '2019-03-31', NULL, NULL, 1),
+	(15, 'Atelier dieng', 'Plateau rue longchamp', '2019-03-13', 'Djamara Edjuhe Cyrille', 23, 2, 1, '', '', '', NULL, '', '', '', NULL, '', 'Meublée', 2500000, 0, '', '', '2019-03-13', 0, 0, '', '', '', '', '', '', '', '', '0000-00-00', '0000-00-00', NULL, NULL, 1),
+	(16, 'ange rachelle', 'Cocody riviera 5', '2019-03-07', 'william break', 25, 1, NULL, '', '', '', NULL, '', '', '', NULL, '', '', 1700000, 0, '', '', '0000-00-00', 0, 0, '', '', '', '', '', '', '', '', '0000-00-00', '0000-00-00', NULL, NULL, 1),
+	(17, 'New Bien', 'Port-Bouet', '2019-03-14', 'ETOUMI Aristide', 21, 1, NULL, '1', '1', '1', NULL, '1', '1', '1', NULL, '1', 'Vide', 180000, 60000, '1', '1', '2017-08-10', 10000, 5000, 'Centre new', 'vridi', 'vridi', '0025', 'Abidjan', 'RAS', 'RAS', 'Incendie', '2014-06-15', '2024-06-15', NULL, NULL, 1),
+	(18, 'LES RESIDENCES KAREN Appartement 1', 'Koumassi en face du Camp Commando', '2017-07-05', 'ETOUMI Aristide', 21, 1, 2, '', '', '', NULL, '', '', '', NULL, '', 'Vide', 70000, 50000, '', '', '0000-00-00', 0, 0, '', '', '', '', '', '', '', '', '0000-00-00', '0000-00-00', NULL, NULL, 1),
+	(19, 'LES RESIDENCES KAREN Appartement 2', 'Koumassi en face du Camp Commando', '2017-07-05', 'ETOUMI Aristide', 21, 1, 2, '', '', '', NULL, '', '', '', NULL, '', 'Vide', 80000, 50000, '', '', '0000-00-00', 0, 0, '', '', '', '', '', '', '', '', '0000-00-00', '0000-00-00', NULL, NULL, 1),
+	(20, 'LES STUDIOS BOEING', 'Cocody les 2 Plateaux', '2018-02-24', 'Kouassi Junior', 37, 8, 8, '', '', '', NULL, '', '', '', NULL, '', 'Vide', 120000, 0, '', '', '0000-00-00', 0, 0, '', '', '', '', '', '', '', '', '0000-00-00', '0000-00-00', NULL, NULL, 1),
+	(21, 'Appartements les 1000 plaisirs', 'Marcory résidentiel', '2017-02-20', 'GUIRE Ahmed', 36, 4, NULL, '', '', '', NULL, '', '', '', NULL, '', 'Meublée', 150000, 0, '', '', '0000-00-00', 0, 0, '', '', '', '', '', '', '', '', '0000-00-00', '0000-00-00', NULL, NULL, 1),
+	(22, 'LES BOUTIQUES BENIEES', 'Treichville rue 12', '2019-06-07', 'Kouassi Junior', 37, 3, NULL, '', '', '', NULL, '', '', '', NULL, '', 'Vide', 80000, 25000, '', '', '0000-00-00', 0, 0, '', '', '', '', '', '', '', '', '0000-00-00', '0000-00-00', NULL, NULL, 1);
+/*!40000 ALTER TABLE `bien` ENABLE KEYS */;
+
+-- Listage de la structure de la table locagest_new. bien_has_caracteristiquesbiens
+CREATE TABLE IF NOT EXISTS `bien_has_caracteristiquesbiens` (
+  `bien_idbien` int(11) NOT NULL,
+  `bien_Personne_idPersonne` int(11) NOT NULL,
+  `bien_TypeBien_idTypeBien` int(11) NOT NULL,
+  `CaracteristiquesBiens_idCaracteristiquesBiens` int(11) NOT NULL,
+  PRIMARY KEY (`bien_idbien`,`bien_Personne_idPersonne`,`bien_TypeBien_idTypeBien`,`CaracteristiquesBiens_idCaracteristiquesBiens`),
+  KEY `fk_bien_has_CaracteristiquesBiens_CaracteristiquesBiens1_idx` (`CaracteristiquesBiens_idCaracteristiquesBiens`),
+  KEY `fk_bien_has_CaracteristiquesBiens_bien1_idx` (`bien_idbien`,`bien_Personne_idPersonne`,`bien_TypeBien_idTypeBien`),
+  CONSTRAINT `fk_bien_has_CaracteristiquesBiens_CaracteristiquesBiens1` FOREIGN KEY (`CaracteristiquesBiens_idCaracteristiquesBiens`) REFERENCES `caracteristiquesbiens` (`idCaracteristiquesBiens`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_bien_has_CaracteristiquesBiens_bien1` FOREIGN KEY (`bien_idbien`, `bien_Personne_idPersonne`, `bien_TypeBien_idTypeBien`) REFERENCES `bien` (`idbien`, `Personne_idPersonne`, `TypeBien_idTypeBien`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Listage des données de la table locagest_new.bien_has_caracteristiquesbiens : ~25 rows (environ)
+/*!40000 ALTER TABLE `bien_has_caracteristiquesbiens` DISABLE KEYS */;
+REPLACE INTO `bien_has_caracteristiquesbiens` (`bien_idbien`, `bien_Personne_idPersonne`, `bien_TypeBien_idTypeBien`, `CaracteristiquesBiens_idCaracteristiquesBiens`) VALUES
+	(13, 21, 5, 2),
+	(13, 21, 5, 3),
+	(13, 21, 5, 9),
+	(13, 21, 5, 10),
+	(14, 23, 1, 2),
+	(14, 23, 1, 7),
+	(14, 23, 1, 8),
+	(15, 23, 2, 2),
+	(15, 23, 2, 7),
+	(16, 25, 1, 3),
+	(16, 25, 1, 4),
+	(16, 25, 1, 5),
+	(16, 25, 1, 6),
+	(16, 25, 1, 7),
+	(17, 21, 1, 2),
+	(17, 21, 1, 7),
+	(17, 21, 1, 10),
+	(18, 21, 1, 2),
+	(18, 21, 1, 7),
+	(19, 21, 1, 2),
+	(19, 21, 1, 7),
+	(20, 37, 8, 2),
+	(20, 37, 8, 7),
+	(20, 37, 8, 9),
+	(20, 37, 8, 10),
+	(21, 36, 4, 2),
+	(21, 36, 4, 9);
+/*!40000 ALTER TABLE `bien_has_caracteristiquesbiens` ENABLE KEYS */;
+
+-- Listage de la structure de la table locagest_new. bien_has_pieces
+CREATE TABLE IF NOT EXISTS `bien_has_pieces` (
+  `bien_idbien` int(11) NOT NULL,
+  `bien_Personne_idPersonne` int(11) NOT NULL,
+  `bien_TypeBien_idTypeBien` int(11) NOT NULL,
+  `Pieces_idPieces` int(11) NOT NULL,
+  `NombrePiece` int(11) DEFAULT NULL,
+  `superficiePiece` int(11) DEFAULT NULL,
+  `DateAjoutPiece` date DEFAULT NULL,
+  PRIMARY KEY (`bien_idbien`,`bien_Personne_idPersonne`,`bien_TypeBien_idTypeBien`,`Pieces_idPieces`),
+  KEY `fk_bien_has_Pieces_Pieces1_idx` (`Pieces_idPieces`),
+  KEY `fk_bien_has_Pieces_bien1_idx` (`bien_idbien`,`bien_Personne_idPersonne`,`bien_TypeBien_idTypeBien`),
+  CONSTRAINT `fk_bien_has_Pieces_Pieces1` FOREIGN KEY (`Pieces_idPieces`) REFERENCES `pieces` (`idPieces`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_bien_has_Pieces_bien1` FOREIGN KEY (`bien_idbien`, `bien_Personne_idPersonne`, `bien_TypeBien_idTypeBien`) REFERENCES `bien` (`idbien`, `Personne_idPersonne`, `TypeBien_idTypeBien`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Listage des données de la table locagest_new.bien_has_pieces : ~9 rows (environ)
+/*!40000 ALTER TABLE `bien_has_pieces` DISABLE KEYS */;
+REPLACE INTO `bien_has_pieces` (`bien_idbien`, `bien_Personne_idPersonne`, `bien_TypeBien_idTypeBien`, `Pieces_idPieces`, `NombrePiece`, `superficiePiece`, `DateAjoutPiece`) VALUES
+	(13, 21, 5, 4, 2, 600, '2019-02-16'),
+	(14, 23, 1, 6, 3, 15, NULL),
+	(15, 23, 2, 4, 2, 36, '2019-03-16'),
+	(16, 25, 1, 6, 3, 425, '2019-03-21'),
+	(17, 21, 1, 8, 4, 350, NULL),
+	(18, 21, 1, 6, 3, 500, NULL),
+	(19, 21, 1, 4, 2, 650, NULL),
+	(20, 37, 8, 8, 4, 850, NULL),
+	(21, 36, 4, 10, 5, 600, NULL),
+	(22, 37, 3, 1, 1, 800, NULL);
+/*!40000 ALTER TABLE `bien_has_pieces` ENABLE KEYS */;
+
+-- Listage de la structure de la table locagest_new. caracteristiquesbiens
+CREATE TABLE IF NOT EXISTS `caracteristiquesbiens` (
+  `idCaracteristiquesBiens` int(11) NOT NULL AUTO_INCREMENT,
+  `CaracteristiquesLibelle` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`idCaracteristiquesBiens`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+
+-- Listage des données de la table locagest_new.caracteristiquesbiens : ~10 rows (environ)
+/*!40000 ALTER TABLE `caracteristiquesbiens` DISABLE KEYS */;
+REPLACE INTO `caracteristiquesbiens` (`idCaracteristiquesBiens`, `CaracteristiquesLibelle`) VALUES
+	(1, 'Accès Internet'),
+	(2, 'Garage'),
+	(3, 'Piscine'),
+	(4, 'Espace vert'),
+	(5, 'Club de sport'),
+	(6, 'Cave'),
+	(7, 'Terrasse'),
+	(8, 'Gardien'),
+	(9, 'Jardin'),
+	(10, 'Aire de jeux');
+/*!40000 ALTER TABLE `caracteristiquesbiens` ENABLE KEYS */;
+
+-- Listage de la structure de la table locagest_new. compteloyer
+CREATE TABLE IF NOT EXISTS `compteloyer` (
+  `idloyer` int(11) NOT NULL AUTO_INCREMENT,
+  `Loyer_dateDebutPeriode` date DEFAULT NULL,
+  `Loyer_dateFinPeriode` date DEFAULT NULL,
+  `Loyer_datePaiement` datetime DEFAULT CURRENT_TIMESTAMP,
+  `Loyer_MontantVerse` bigint(11) DEFAULT NULL,
+  `moisannee_idMois` int(11) NOT NULL,
+  `Loyer_NumCheque` varchar(100) DEFAULT NULL,
+  `idlocation` int(11) NOT NULL,
+  `typepaiement_idTypePaiement` int(11) NOT NULL,
+  PRIMARY KEY (`idloyer`),
+  KEY `fk_Compteloyer_personne_loue_bien1_idx` (`idlocation`),
+  KEY `fk_Compteloyer_typepaiement1_idx` (`typepaiement_idTypePaiement`),
+  KEY `fk_Compteloyer_moisannee1_idx` (`moisannee_idMois`)
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
+
+-- Listage des données de la table locagest_new.compteloyer : ~29 rows (environ)
+/*!40000 ALTER TABLE `compteloyer` DISABLE KEYS */;
+REPLACE INTO `compteloyer` (`idloyer`, `Loyer_dateDebutPeriode`, `Loyer_dateFinPeriode`, `Loyer_datePaiement`, `Loyer_MontantVerse`, `moisannee_idMois`, `Loyer_NumCheque`, `idlocation`, `typepaiement_idTypePaiement`) VALUES
+	(1, '2019-03-04', '2019-04-03', '2019-03-04 00:00:00', 170000, 4, NULL, 3, 1),
+	(2, '2016-02-05', '2016-03-06', '2019-04-25 13:56:09', 340000, 2, NULL, 3, 1),
+	(3, '2016-03-05', '2016-04-04', '2019-04-25 13:56:09', 340000, 3, NULL, 3, 1),
+	(4, '2016-02-05', '2016-03-06', '2019-04-25 13:58:08', 1020000, 2, NULL, 3, 1),
+	(5, '2016-03-05', '2016-04-04', '2019-04-25 13:58:08', 1020000, 3, NULL, 3, 1),
+	(6, '2016-04-05', '2016-05-05', '2019-04-25 13:58:08', 1020000, 4, NULL, 3, 1),
+	(8, '2016-06-05', '2016-07-05', '2019-04-25 13:58:08', 1020000, 6, NULL, 3, 1),
+	(9, '2016-07-05', '2016-08-04', '2019-04-25 13:58:08', 1020000, 7, NULL, 3, 1),
+	(10, '2019-01-01', '2019-01-31', '2019-04-30 18:44:54', 2500000, 1, NULL, 4, 1),
+	(11, '2019-09-01', '2019-10-01', '2019-04-30 18:45:53', 2500000, 9, NULL, 4, 1),
+	(12, '2019-11-01', '2019-12-01', '2019-05-21 21:17:46', 170000, 11, NULL, 3, 1),
+	(17, '2019-06-01', '2019-07-01', '2019-05-23 15:35:07', 3000000, 4, NULL, 16, 1),
+	(18, '2019-01-01', '2019-01-31', '2019-06-13 09:58:12', 5000000, 1, NULL, 16, 3),
+	(19, '2019-02-01', '2019-03-03', '2019-06-13 09:58:12', 5000000, 2, NULL, 16, 3),
+	(20, '2019-06-05', '2019-07-05', '2019-06-13 11:33:27', 3400000, 6, NULL, 17, 1),
+	(21, '2019-07-05', '2019-08-04', '2019-06-13 11:33:27', 3400000, 7, NULL, 17, 1),
+	(22, '2019-08-05', '2019-09-04', '2019-06-13 11:49:54', 1700000, 8, '445CC58', 17, 2),
+	(23, '2019-01-01', '2019-01-31', '2019-06-13 12:07:00', 1700000, 1, NULL, 17, 1),
+	(25, '2019-03-04', '2019-04-03', '2019-06-13 12:50:40', 2500000, 3, NULL, 16, 1),
+	(26, '2019-01-01', '2019-01-31', '2019-06-27 16:14:34', 70000, 1, NULL, 18, 1),
+	(27, '2019-02-04', '2019-03-06', '2019-06-27 16:16:38', 140000, 2, NULL, 18, 1),
+	(28, '2019-03-04', '2019-04-03', '2019-06-27 16:16:38', 140000, 3, NULL, 18, 1),
+	(29, '2019-08-01', '2019-08-31', '2019-08-09 22:18:54', 1700000, 8, NULL, 17, 1),
+	(30, '2019-09-01', '2019-10-01', '2019-08-09 23:56:27', 70000, 9, NULL, 18, 1),
+	(31, '2019-10-01', '2019-10-31', '2019-08-10 00:15:48', 70000, 10, NULL, 18, 1),
+	(32, '2019-11-01', '2019-12-01', '2019-08-10 00:16:23', 70000, 11, NULL, 18, 1),
+	(33, '2019-08-01', '2019-08-31', '2019-08-10 00:18:03', 2500000, 8, NULL, 16, 1),
+	(34, '2019-09-01', '2019-10-01', '2019-08-10 00:32:52', 2500000, 9, NULL, 16, 1),
+	(35, '2019-10-01', '2019-10-31', '2019-08-10 00:59:48', 2500000, 10, NULL, 16, 1),
+	(38, '2019-08-01', '2019-08-31', '2019-08-10 17:17:58', 1700000, 8, NULL, 17, 1);
+/*!40000 ALTER TABLE `compteloyer` ENABLE KEYS */;
+
+-- Listage de la structure de la table locagest_new. depenses
+CREATE TABLE IF NOT EXISTS `depenses` (
+  `idDepenses` int(11) NOT NULL AUTO_INCREMENT,
+  `idBien` int(11) NOT NULL DEFAULT '0',
+  `idTypeTravaux` int(11) NOT NULL DEFAULT '0',
+  `Nom_Intervenant` varchar(150) DEFAULT NULL,
+  `Contact_Intervenant` varchar(150) DEFAULT NULL,
+  `Adresse_Intervenant` varchar(150) DEFAULT NULL,
+  `Date_Travaux` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `Montant_Travaux` int(20) DEFAULT NULL,
+  PRIMARY KEY (`idDepenses`),
+  KEY `FK_BIEN` (`idBien`),
+  KEY `FK_TYPE_TRAVAUX` (`idTypeTravaux`),
+  CONSTRAINT `FK_BIEN` FOREIGN KEY (`idBien`) REFERENCES `bien` (`idbien`),
+  CONSTRAINT `FK_TYPE_TRAVAUX` FOREIGN KEY (`idTypeTravaux`) REFERENCES `typetravaux` (`idTypeTravaux`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+-- Listage des données de la table locagest_new.depenses : ~3 rows (environ)
+/*!40000 ALTER TABLE `depenses` DISABLE KEYS */;
+REPLACE INTO `depenses` (`idDepenses`, `idBien`, `idTypeTravaux`, `Nom_Intervenant`, `Contact_Intervenant`, `Adresse_Intervenant`, `Date_Travaux`, `Montant_Travaux`) VALUES
+	(2, 13, 1, 'kouakou philibert', '01014391', 'Abidjan', '2019-06-15 00:00:00', 17000),
+	(3, 17, 2, 'Soro', '54859689', 'anono ', '2019-06-04 00:00:00', 20000),
+	(4, 17, 1, 'Atihahi jean françois', '45859656', 'cocody riviera2 ', '2019-07-05 00:00:00', 45000),
+	(5, 22, 1, 'Koffi Guiy Roland', '47568521', 'Cocody danga', '2019-08-10 00:00:00', 25000);
+/*!40000 ALTER TABLE `depenses` ENABLE KEYS */;
+
+-- Listage de la structure de la table locagest_new. images
+CREATE TABLE IF NOT EXISTS `images` (
+  `idImages` int(11) NOT NULL AUTO_INCREMENT,
+  `ImagesLien` varchar(100) DEFAULT NULL,
+  `bien_idbien` int(11) NOT NULL,
+  `bien_Personne_idPersonne` int(11) NOT NULL,
+  `bien_TypeBien_idTypeBien` int(11) NOT NULL,
+  `ImagesDescription` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`idImages`),
+  KEY `fk_Images_bien1_idx` (`bien_idbien`,`bien_Personne_idPersonne`,`bien_TypeBien_idTypeBien`),
+  CONSTRAINT `fk_Images_bien1` FOREIGN KEY (`bien_idbien`, `bien_Personne_idPersonne`, `bien_TypeBien_idTypeBien`) REFERENCES `bien` (`idbien`, `Personne_idPersonne`, `TypeBien_idTypeBien`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Listage des données de la table locagest_new.images : ~0 rows (environ)
+/*!40000 ALTER TABLE `images` DISABLE KEYS */;
+/*!40000 ALTER TABLE `images` ENABLE KEYS */;
+
+-- Listage de la structure de la table locagest_new. immeubles
+CREATE TABLE IF NOT EXISTS `immeubles` (
+  `idImmeubles` int(11) NOT NULL AUTO_INCREMENT,
+  `NomImmeubles` varchar(150) DEFAULT NULL,
+  `AdresseImmeubles` varchar(100) DEFAULT NULL,
+  `SuperficieImmeubles` int(11) DEFAULT NULL,
+  `DateConstructImmeubles` date DEFAULT NULL,
+  `DescriptionImmeubles` varchar(200) DEFAULT NULL,
+  `personne_idPersonne` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idImmeubles`),
+  KEY `FK_personne` (`personne_idPersonne`),
+  CONSTRAINT `FK_personne` FOREIGN KEY (`personne_idPersonne`) REFERENCES `personne` (`idPersonne`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+-- Listage des données de la table locagest_new.immeubles : ~4 rows (environ)
+/*!40000 ALTER TABLE `immeubles` DISABLE KEYS */;
+REPLACE INTO `immeubles` (`idImmeubles`, `NomImmeubles`, `AdresseImmeubles`, `SuperficieImmeubles`, `DateConstructImmeubles`, `DescriptionImmeubles`, `personne_idPersonne`) VALUES
+	(1, 'Immeuble Chateau de France', 'Cocody Angré Chateau', 1500, '2019-02-04', 'Immeuble avec appartements complets et situé en bordure de route', 21),
+	(2, 'LES RESIDENCES KAREN', 'Koumassi en face du Camp Commando', 800, '2017-07-05', 'Immeuble de 8 étages situé en bordure du boulevard Giscar d\'Estaing, idéal pour votre entreprise', 23),
+	(4, 'GROUPE DE STUDIO', 'Cocody les 2 Plateaux', 850, '2018-08-22', 'Groupe studio', 36),
+	(8, 'IMMEUBLE ZAHIA', 'Port-Bouet Bietry', 700, '2019-02-25', 'Immeuble de  8 étages composé de bureaux et d\'appartement', 37);
+/*!40000 ALTER TABLE `immeubles` ENABLE KEYS */;
+
+-- Listage de la structure de la table locagest_new. moisannee
+CREATE TABLE IF NOT EXISTS `moisannee` (
+  `idMois` int(11) NOT NULL AUTO_INCREMENT,
+  `LibelleMois` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`idMois`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+
+-- Listage des données de la table locagest_new.moisannee : ~12 rows (environ)
+/*!40000 ALTER TABLE `moisannee` DISABLE KEYS */;
+REPLACE INTO `moisannee` (`idMois`, `LibelleMois`) VALUES
+	(1, 'Janvier'),
+	(2, 'Fevrier'),
+	(3, 'Mars'),
+	(4, 'Avril'),
+	(5, 'Mai'),
+	(6, 'Juin'),
+	(7, 'Juillet'),
+	(8, 'Aout'),
+	(9, 'Septembre'),
+	(10, 'Octobre'),
+	(11, 'Novembre'),
+	(12, 'Decembre');
+/*!40000 ALTER TABLE `moisannee` ENABLE KEYS */;
+
+-- Listage de la structure de la table locagest_new. pays
+CREATE TABLE IF NOT EXISTS `pays` (
+  `idpays` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `Nompays` varchar(450) DEFAULT NULL,
+  `Codepays` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`idpays`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Listage des données de la table locagest_new.pays : ~0 rows (environ)
+/*!40000 ALTER TABLE `pays` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pays` ENABLE KEYS */;
+
+-- Listage de la structure de la table locagest_new. personne
+CREATE TABLE IF NOT EXISTS `personne` (
+  `idPersonne` int(11) NOT NULL AUTO_INCREMENT,
+  `PersonneSituationGeo` varchar(100) DEFAULT NULL,
+  `PersonneEmail` varchar(100) DEFAULT NULL,
+  `PersonneTel` varchar(100) DEFAULT NULL,
+  `PersonneCel` varchar(100) DEFAULT NULL,
+  `PersonneNumeroCB` varchar(100) DEFAULT NULL,
+  `PersonneVille` int(11) DEFAULT NULL,
+  `PersonnePays` int(10) unsigned DEFAULT NULL,
+  `top_validite` int(11) DEFAULT '0',
+  PRIMARY KEY (`idPersonne`),
+  KEY `fk_Personne_Ville1_idx` (`PersonneVille`),
+  KEY `fk_Personne_Ville2_idx` (`PersonnePays`)
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
+
+-- Listage des données de la table locagest_new.personne : ~19 rows (environ)
+/*!40000 ALTER TABLE `personne` DISABLE KEYS */;
+REPLACE INTO `personne` (`idPersonne`, `PersonneSituationGeo`, `PersonneEmail`, `PersonneTel`, `PersonneCel`, `PersonneNumeroCB`, `PersonneVille`, `PersonnePays`, `top_validite`) VALUES
+	(21, 'Port-Bouet', 'aetoumi@gmail.com', '', '41598655', NULL, 0, 0, 0),
+	(22, 'Abidjan, Marcory remblais', 'kacou@gmail.com', '', '41587452', NULL, 0, 0, 0),
+	(23, 'Cote d\'ivoire Abidjan Cocody', 'djamaracyrille@gmail.com', '58007387', '01014391', NULL, 0, 0, 0),
+	(24, 'Abidjan, riviera 3', 'albertinegneka@gmail.com', '05243623', '41256369', NULL, 0, 0, 0),
+	(25, 'cocody riviera abatta', 'wbreak@gmail.com', '', '01014391', NULL, 0, 0, 0),
+	(26, 'cocody riviera 4', 'akanzabgaz@netweb.net', '02289636', '03236333', NULL, 0, 0, 0),
+	(27, NULL, 'ehouse@gmail.com', NULL, NULL, NULL, NULL, NULL, 0),
+	(28, 'Treichville bvd VGE', 'sicogi@hotmail.com', NULL, NULL, NULL, NULL, NULL, 0),
+	(29, 'Marcory Remblais', 'immo@aviso.ci', NULL, NULL, NULL, NULL, NULL, 0),
+	(33, NULL, 'kassi@gmail.com', NULL, NULL, NULL, NULL, NULL, 0),
+	(34, 'Plateau', 'beugre@gmail.com', '', '47851269', NULL, 0, 0, 0),
+	(35, NULL, 'aureliegoue@gmail.com', NULL, NULL, NULL, NULL, NULL, 0),
+	(36, 'Marcory grand carrefour', 'ahmedguire@gmail.com', '', '48965412', NULL, 0, 0, 0),
+	(37, 'Koumassi soweto', 'juniork@gmail.com', '', '78549632', NULL, 0, 0, 0),
+	(38, 'Marcory zone 4', 'affoukeita@gmail.com', '20212365', '74569823', NULL, 0, 0, 0),
+	(40, 'Riviera palmeraie', 'gestlab@gmail.com', '', '20487596', NULL, 0, 0, 0),
+	(42, 'Treichville rue 12', 'kfausin@yahoo.fr', '', '41587963', NULL, 0, 0, 0),
+	(43, 'Plateau cité administrative', 'kkmira@gmail.com', '', '45869123', NULL, 0, 0, 0),
+	(44, 'Plateau cité administrative', 'bat_immo@gmail.com', '20365874', '21232547', NULL, 0, 0, 0);
+/*!40000 ALTER TABLE `personne` ENABLE KEYS */;
+
+-- Listage de la structure de la table locagest_new. personne_has_role
+CREATE TABLE IF NOT EXISTS `personne_has_role` (
+  `Personne_idPersonne` int(11) NOT NULL,
+  `role_idrole` int(11) NOT NULL,
+  `DateAjoutRole` date DEFAULT NULL,
+  `idAgence` int(11) DEFAULT NULL,
+  PRIMARY KEY (`Personne_idPersonne`,`role_idrole`),
+  KEY `fk_Personne_has_role_role1_idx` (`role_idrole`),
+  KEY `fk_Personne_has_role_Personne1_idx` (`Personne_idPersonne`),
+  KEY `FK_Personne_has_role_agence` (`idAgence`),
+  CONSTRAINT `FK_Personne_has_role_agence` FOREIGN KEY (`idAgence`) REFERENCES `personne` (`idPersonne`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Personne_has_role_Personne1` FOREIGN KEY (`Personne_idPersonne`) REFERENCES `personne` (`idPersonne`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Personne_has_role_role1` FOREIGN KEY (`role_idrole`) REFERENCES `role` (`idrole`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Listage des données de la table locagest_new.personne_has_role : ~18 rows (environ)
+/*!40000 ALTER TABLE `personne_has_role` DISABLE KEYS */;
+REPLACE INTO `personne_has_role` (`Personne_idPersonne`, `role_idrole`, `DateAjoutRole`, `idAgence`) VALUES
+	(21, 1, NULL, NULL),
+	(22, 2, NULL, NULL),
+	(23, 1, NULL, NULL),
+	(24, 2, NULL, NULL),
+	(25, 3, NULL, NULL),
+	(26, 2, NULL, NULL),
+	(27, 3, NULL, NULL),
+	(28, 4, NULL, 36),
+	(29, 4, NULL, NULL),
+	(33, 3, NULL, 28),
+	(34, 3, NULL, 28),
+	(35, 3, NULL, 28),
+	(36, 1, NULL, 28),
+	(37, 1, NULL, 28),
+	(38, 2, NULL, 28),
+	(40, 2, NULL, 28),
+	(42, 2, NULL, 28),
+	(43, 2, NULL, 28),
+	(44, 1, NULL, 28);
+/*!40000 ALTER TABLE `personne_has_role` ENABLE KEYS */;
+
+-- Listage de la structure de la table locagest_new. personne_loue_bien
+CREATE TABLE IF NOT EXISTS `personne_loue_bien` (
+  `idlocation` int(11) NOT NULL AUTO_INCREMENT,
+  `Personne_idPersonne` int(11) NOT NULL,
+  `bien_idbien` int(11) NOT NULL,
+  `dateDebutlocation` date DEFAULT NULL,
+  `dateFinLocation` date DEFAULT NULL,
+  `top_validite` int(1) NOT NULL DEFAULT '0' COMMENT 'Permet de savoir si la location est encore active ou non. 0 pour actif 1 pour desactiver',
+  `montantAvance` int(50) DEFAULT NULL,
+  `montantCaution` int(50) DEFAULT NULL,
+  `montantAnnexe` int(50) DEFAULT NULL,
+  `montantTotal` int(50) DEFAULT NULL,
+  PRIMARY KEY (`idlocation`),
+  KEY `fk_Personne_has_bien_bien1_idx` (`bien_idbien`),
+  KEY `fk_Personne_has_bien_Personne1_idx` (`Personne_idPersonne`),
+  CONSTRAINT `fk_Personne_has_bien_Personne1` FOREIGN KEY (`Personne_idPersonne`) REFERENCES `personne` (`idPersonne`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Personne_has_bien_bien1` FOREIGN KEY (`bien_idbien`) REFERENCES `bien` (`idbien`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+
+-- Listage des données de la table locagest_new.personne_loue_bien : ~3 rows (environ)
+/*!40000 ALTER TABLE `personne_loue_bien` DISABLE KEYS */;
+REPLACE INTO `personne_loue_bien` (`idlocation`, `Personne_idPersonne`, `bien_idbien`, `dateDebutlocation`, `dateFinLocation`, `top_validite`, `montantAvance`, `montantCaution`, `montantAnnexe`, `montantTotal`) VALUES
+	(16, 26, 15, '2019-05-07', '2019-05-11', 0, 200000, 0, 4000000, 4200000),
+	(17, 22, 16, '2019-06-01', '2020-06-08', 0, 5000000, 0, 4700000, 9700000),
+	(18, 24, 18, '2019-06-04', '2019-06-30', 0, 150000, 150000, 20000, 320000),
+	(19, 42, 14, '2019-08-01', '2019-12-31', 0, 345000, 15000, 535000, 895000);
+/*!40000 ALTER TABLE `personne_loue_bien` ENABLE KEYS */;
+
+-- Listage de la structure de la table locagest_new. persphys
+CREATE TABLE IF NOT EXISTS `persphys` (
+  `idPersPhys` int(11) NOT NULL AUTO_INCREMENT,
+  `Nom_PersPhys` varchar(100) DEFAULT NULL,
+  `Prenom_PersPhys` varchar(150) DEFAULT NULL,
+  `DateNaiss_PersPhys` date DEFAULT NULL,
+  `numpiece` varchar(45) NOT NULL,
+  `LieuNaiss_PersPhys` varchar(100) DEFAULT NULL,
+  `SexePersPhys` varchar(45) DEFAULT NULL,
+  `Personne_idPersonne` int(11) NOT NULL,
+  `TypePiece_idTypePiece` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idPersPhys`,`Personne_idPersonne`),
+  KEY `fk_PersPhys_Personne1_idx` (`Personne_idPersonne`),
+  KEY `fk_PersPhys_TypePiece1_idx` (`TypePiece_idTypePiece`),
+  CONSTRAINT `fk_PersPhys_Personne1` FOREIGN KEY (`Personne_idPersonne`) REFERENCES `personne` (`idPersonne`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_PersPhys_TypePiece1` FOREIGN KEY (`TypePiece_idTypePiece`) REFERENCES `typepiece` (`idTypePiece`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+
+-- Listage des données de la table locagest_new.persphys : ~16 rows (environ)
+/*!40000 ALTER TABLE `persphys` DISABLE KEYS */;
+REPLACE INTO `persphys` (`idPersPhys`, `Nom_PersPhys`, `Prenom_PersPhys`, `DateNaiss_PersPhys`, `numpiece`, `LieuNaiss_PersPhys`, `SexePersPhys`, `Personne_idPersonne`, `TypePiece_idTypePiece`) VALUES
+	(1, 'ETOUMI', 'Aristide', '1995-09-10', '', 'Grand-Bassam', 'Hommme', 21, 1),
+	(2, 'Kacou', 'Philippe', '1987-11-19', '', 'Bocanda', 'Hommme', 22, NULL),
+	(3, 'Djamara', 'Edjuhe Cyrille', '2019-02-06', '', 'Abidjan marcory', 'Hommme', 23, 1),
+	(4, 'GNEKA', 'Albertine Miriam', '2019-03-05', '', 'Abidjan cocody', 'Femme', 24, NULL),
+	(5, 'william', 'break', '1996-02-04', 'CNI-05122991', 'marcory', 'Hommme', 25, 1),
+	(6, 'Akanza', 'Bongou legou amanatonian zileke', '2019-05-06', '', 'congo kinshasa', 'Hommme', 26, NULL),
+	(7, 'djam\'s Houses', 'living well', NULL, '', NULL, NULL, 27, NULL),
+	(11, 'Kassi', 'Fulgence', NULL, '', NULL, 'Hommme', 33, NULL),
+	(12, 'BEUGRE', 'JUSTINE', '1992-10-02', 'C-54678', 'Ouragahio', 'Hommme', 34, 1),
+	(13, 'GOUE', 'Aurelie', NULL, '', NULL, 'Femme', 35, NULL),
+	(14, 'GUIRE', 'Ahmed', '1985-02-14', '', 'Sinfra', 'Hommme', 36, NULL),
+	(15, 'Kouassi', 'Junior', '1986-08-14', '', 'Béoumi', 'Hommme', 37, NULL),
+	(16, 'KEITA', 'AFFOU', '1985-08-26', '', 'Issia', 'Femme', 38, NULL),
+	(18, 'Kouassi', 'Faustin', '1985-04-02', '', 'Grand-Bassam', 'Hommme', 42, NULL),
+	(19, 'KaKou', 'Anne Mirabelle', '1995-05-02', '', 'Adjamé Mirador', 'Hommme', 43, NULL);
+/*!40000 ALTER TABLE `persphys` ENABLE KEYS */;
+
+-- Listage de la structure de la table locagest_new. pers_morale
+CREATE TABLE IF NOT EXISTS `pers_morale` (
+  `idPers_Morale` int(11) NOT NULL AUTO_INCREMENT,
+  `DenomPers_Morale` varchar(100) DEFAULT NULL,
+  `SiegePers_Morale` varchar(100) DEFAULT NULL,
+  `Personne_idPersonne` int(11) NOT NULL,
+  `FomeJuridique_Morale` varchar(50) DEFAULT NULL,
+  `RCCM_Morale` varchar(50) DEFAULT NULL,
+  `CompteContrib_Morale` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`idPers_Morale`,`Personne_idPersonne`),
+  KEY `fk_Pers_Morale_Personne1_idx` (`Personne_idPersonne`),
+  CONSTRAINT `fk_Pers_Morale_Personne1` FOREIGN KEY (`Personne_idPersonne`) REFERENCES `personne` (`idPersonne`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+-- Listage des données de la table locagest_new.pers_morale : ~2 rows (environ)
+/*!40000 ALTER TABLE `pers_morale` DISABLE KEYS */;
+REPLACE INTO `pers_morale` (`idPers_Morale`, `DenomPers_Morale`, `SiegePers_Morale`, `Personne_idPersonne`, `FomeJuridique_Morale`, `RCCM_Morale`, `CompteContrib_Morale`) VALUES
+	(1, 'SICOGI INTER', 'Treichville bvd VGE', 28, NULL, NULL, NULL),
+	(2, 'IMMO SA', 'Marcory Remblais', 29, NULL, NULL, NULL),
+	(3, 'GEST-LAB S.A', NULL, 40, 'Société  Anonyme', 'CI-ABJ-2010-B-20145', 'Contrib-gestlab'),
+	(4, 'BAT IMMOBILIER', NULL, 44, 'Société Anonyme', 'CI-ABJ-2009-B-00214', 'contrib-bat-immo');
+/*!40000 ALTER TABLE `pers_morale` ENABLE KEYS */;
+
+-- Listage de la structure de la table locagest_new. pieces
+CREATE TABLE IF NOT EXISTS `pieces` (
+  `idPieces` int(11) NOT NULL AUTO_INCREMENT,
+  `PiecesLibelle` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`idPieces`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+
+-- Listage des données de la table locagest_new.pieces : ~12 rows (environ)
+/*!40000 ALTER TABLE `pieces` DISABLE KEYS */;
+REPLACE INTO `pieces` (`idPieces`, `PiecesLibelle`) VALUES
+	(1, '1'),
+	(2, 'Studio'),
+	(3, '2'),
+	(4, '2-3'),
+	(5, '3'),
+	(6, '3-4'),
+	(7, '4'),
+	(8, '4-5'),
+	(9, '5'),
+	(10, '5-6'),
+	(11, '6'),
+	(12, '6+');
+/*!40000 ALTER TABLE `pieces` ENABLE KEYS */;
+
+-- Listage de la structure de la table locagest_new. role
+CREATE TABLE IF NOT EXISTS `role` (
+  `idrole` int(11) NOT NULL AUTO_INCREMENT,
+  `role_libelle` varchar(100) DEFAULT NULL,
+  `role_date_debut` date DEFAULT NULL,
+  PRIMARY KEY (`idrole`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+-- Listage des données de la table locagest_new.role : ~4 rows (environ)
+/*!40000 ALTER TABLE `role` DISABLE KEYS */;
+REPLACE INTO `role` (`idrole`, `role_libelle`, `role_date_debut`) VALUES
+	(1, 'proprietaire', '2019-02-05'),
+	(2, 'locataire', '2019-02-05'),
+	(3, 'agent', '2019-02-05'),
+	(4, 'agence', '2019-07-06');
+/*!40000 ALTER TABLE `role` ENABLE KEYS */;
+
+-- Listage de la structure de la table locagest_new. typebien
+CREATE TABLE IF NOT EXISTS `typebien` (
+  `idTypeBien` int(11) NOT NULL AUTO_INCREMENT,
+  `TypeBienLibelle` varchar(150) DEFAULT NULL,
+  PRIMARY KEY (`idTypeBien`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+
+-- Listage des données de la table locagest_new.typebien : ~9 rows (environ)
+/*!40000 ALTER TABLE `typebien` DISABLE KEYS */;
+REPLACE INTO `typebien` (`idTypeBien`, `TypeBienLibelle`) VALUES
+	(1, 'Appartement'),
+	(2, 'Atelier'),
+	(3, 'Boutique'),
+	(4, 'Chambre'),
+	(5, 'Maison'),
+	(6, 'Local professionnelle'),
+	(7, 'Parking'),
+	(8, 'Studio'),
+	(9, 'Entrepot');
+/*!40000 ALTER TABLE `typebien` ENABLE KEYS */;
+
+-- Listage de la structure de la table locagest_new. typepaiement
+CREATE TABLE IF NOT EXISTS `typepaiement` (
+  `idTypePaiement` int(11) NOT NULL AUTO_INCREMENT,
+  `LibelleTypePaiement` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`idTypePaiement`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- Listage des données de la table locagest_new.typepaiement : ~3 rows (environ)
+/*!40000 ALTER TABLE `typepaiement` DISABLE KEYS */;
+REPLACE INTO `typepaiement` (`idTypePaiement`, `LibelleTypePaiement`) VALUES
+	(1, 'Espece'),
+	(2, 'Chèque'),
+	(3, 'Virement bancaire');
+/*!40000 ALTER TABLE `typepaiement` ENABLE KEYS */;
+
+-- Listage de la structure de la table locagest_new. typepiece
+CREATE TABLE IF NOT EXISTS `typepiece` (
+  `idTypePiece` int(11) NOT NULL AUTO_INCREMENT,
+  `TypePieceLibelle` varchar(150) DEFAULT NULL,
+  PRIMARY KEY (`idTypePiece`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- Listage des données de la table locagest_new.typepiece : ~2 rows (environ)
+/*!40000 ALTER TABLE `typepiece` DISABLE KEYS */;
+REPLACE INTO `typepiece` (`idTypePiece`, `TypePieceLibelle`) VALUES
+	(1, 'CNI'),
+	(2, 'Attestation d\'Identite');
+/*!40000 ALTER TABLE `typepiece` ENABLE KEYS */;
+
+-- Listage de la structure de la table locagest_new. typetravaux
+CREATE TABLE IF NOT EXISTS `typetravaux` (
+  `idTypeTravaux` int(11) NOT NULL AUTO_INCREMENT,
+  `LibelleTravaux` varchar(150) NOT NULL,
+  PRIMARY KEY (`idTypeTravaux`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+-- Listage des données de la table locagest_new.typetravaux : ~4 rows (environ)
+/*!40000 ALTER TABLE `typetravaux` DISABLE KEYS */;
+REPLACE INTO `typetravaux` (`idTypeTravaux`, `LibelleTravaux`) VALUES
+	(1, 'plomberie'),
+	(2, 'electricité'),
+	(3, 'menuiserie'),
+	(4, 'etancheité');
+/*!40000 ALTER TABLE `typetravaux` ENABLE KEYS */;
+
+-- Listage de la structure de la table locagest_new. user
+CREATE TABLE IF NOT EXISTS `user` (
+  `iduser` int(11) NOT NULL AUTO_INCREMENT,
+  `login` varchar(150) DEFAULT NULL,
+  `Password` varchar(150) DEFAULT NULL,
+  `email` varchar(150) DEFAULT NULL,
+  `userIcon` varchar(150) DEFAULT NULL,
+  `Personne_idPersonne` int(11) NOT NULL,
+  PRIMARY KEY (`iduser`),
+  KEY `fk_user_Personne1_idx` (`Personne_idPersonne`),
+  CONSTRAINT `fk_user_Personne1` FOREIGN KEY (`Personne_idPersonne`) REFERENCES `personne` (`idPersonne`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+
+-- Listage des données de la table locagest_new.user : ~8 rows (environ)
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+REPLACE INTO `user` (`iduser`, `login`, `Password`, `email`, `userIcon`, `Personne_idPersonne`) VALUES
+	(1, 'elpandor', '12345', 'aetoumi@gmail.com', 'ETOUMIAristide.jpg', 21),
+	(2, 'djamara', '258092*', 'djamaracyrille@gmail.com', 'id_card.jpg', 23),
+	(3, 'break', '258092*', 'wbreak@gmail.com', '.jpg', 25),
+	(4, 'djam\'s', '852654*', 'ehouse@gmail.com', NULL, 27),
+	(5, 'sicogi', 'sicogi225', 'sicogi@hotmail.com', NULL, 28),
+	(6, 'immo.sa', 'immosa', 'immo@aviso.ci', NULL, 29),
+	(9, 'kassi@gmail.com', '123456', 'kassi@gmail.com', NULL, 33),
+	(10, 'beugre@gmail.com', '123456', 'beugre@gmail.com', '.jpg', 34),
+	(11, 'aureliegoue@gmail.com', '123456', 'aureliegoue@gmail.com', NULL, 35);
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+
+-- Listage de la structure de la table locagest_new. ville
+CREATE TABLE IF NOT EXISTS `ville` (
+  `idVille` int(11) NOT NULL AUTO_INCREMENT,
+  `NomVille` varchar(45) DEFAULT NULL,
+  `pays_idpays` int(10) unsigned NOT NULL,
+  `pays_idpays1` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`idVille`,`pays_idpays`),
+  KEY `fk_Ville_pays1_idx` (`pays_idpays1`),
+  CONSTRAINT `fk_Ville_pays1` FOREIGN KEY (`pays_idpays1`) REFERENCES `pays` (`idpays`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Listage des données de la table locagest_new.ville : ~0 rows (environ)
+/*!40000 ALTER TABLE `ville` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ville` ENABLE KEYS */;
+
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
