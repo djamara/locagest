@@ -18,16 +18,18 @@ class Bien extends CI_Model {
         parent::__construct();
     }
 
-    public function creerBien($libelle, $localisation, $dateCreation, $nomProprietaire, $idPersonne, $idTypeBien, $idImmeuble, $feuilleCadastrale, $parcelleCadastrale, $categorieCadastrale, $valeurLocataiveCadastrale, $lot, $millieme, $parking, $autresDependance, $cave, $typeLocation, $loyerHC, $charges, $taxeHabitation, $taxeFonciere, $dateAcquisition, $prixAcquisition, $fraisAcquisition, $nomCentreiImpot, $adresse1CentreImpot, $adresse2CentreImpot, $codePostale, $ville, $description, $notes, $libAssurance, $dateSouscriptionAssurance, $dateEcheanceAssurance) {
+    public function creerBien($idAgence,$libelle, $localisation, $dateCreation, $nomProprietaire, $idPersonne, $idTypeBien, $idImmeuble, $feuilleCadastrale, $parcelleCadastrale, $categorieCadastrale, $valeurLocataiveCadastrale, $lot, $millieme, $parking, $autresDependance, $cave, $typeLocation, $loyerHC, $charges, $taxeHabitation, $taxeFonciere, $dateAcquisition, $prixAcquisition, $fraisAcquisition, $nomCentreiImpot, $adresse1CentreImpot, $adresse2CentreImpot, $codePostale, $ville, $description, $notes, $libAssurance, $dateSouscriptionAssurance, $dateEcheanceAssurance) {
 
-        $sql = "INSERT INTO bien(bienLibelle, bienLocalisation, bienDateCreation, bienNomProprietaire, "
+        $sql = "INSERT INTO bien(idAgence,bienLibelle, bienLocalisation, bienDateCreation, bienNomProprietaire, "
                 . "Personne_idPersonne, TypeBien_idTypeBien, Immeubles_idImmeubles, "
                 . "feuilleCadastrale, parcelleCadastrale, categorieCadastrale, valeurLocataiveCadastrale, lot,"
                 . "millieme, parking, autresDependance, cave, typeLocation, loyerHC, charges, taxeHabitation,"
                 . "taxeFonciere, dateAcquisition, prixAcquisition, fraisAcquisition, nomCentreiImpot,"
                 . "adresse1CentreImpot, adresse2CentreImpot, codePostale, ville, description,"
-                . "notes, libAssurance, dateSouscriptionAssurance, dateEcheanceAssurance) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                . "notes, libAssurance, dateSouscriptionAssurance, dateEcheanceAssurance) 
+                VALUES(? ,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $exeq = $this->db->query($sql, array(
+			$idAgence,
             $libelle,
             $localisation,
             $dateCreation,
@@ -145,10 +147,10 @@ class Bien extends CI_Model {
         return $exeq;
     }
 
-    public function getNbBien() {
-        $sql = "select COUNT(idbien) as nbBien from bien";
+    public function getNbBien($idAgence) {
+        $sql = "select COUNT(idbien) as nbBien from bien where idAgence = ?";
 
-        $resultNbBien = $this->db->query($sql);
+        $resultNbBien = $this->db->query($sql,array($idAgence));
         foreach ($resultNbBien->result() as $row) {
             $retour = $row->nbBien;
         }

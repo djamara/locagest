@@ -54,6 +54,7 @@ class AccueilAdmin extends CI_Controller {
 
     private function setData() {
         //$this->check_session();
+
         if (isset($_SESSION['idPersonne'])) {
             $resultPers = $this->Physique->getPhysique_ByIDPersonne($_SESSION['idPersonne']);
 
@@ -86,10 +87,10 @@ class AccueilAdmin extends CI_Controller {
         $nbLocataire = $this->Personne_has_role->getNbPersonneRole(1,$idagence);
 
         //Liste des locataires
-        $nbLocation = $this->Locations->getNbLocation();
+        $nbLocation = $this->Locations->getNbLocation($idagence);
 
         //Liste des biens
-        $nbBien = $this->Bien->getNbBien();
+        $nbBien = $this->Bien->getNbBien($idagence);
 
         $info['nbBien'] = $nbBien;
         $info['nbProprietaire'] = $nbProprietaire;
@@ -115,7 +116,7 @@ class AccueilAdmin extends CI_Controller {
             //Chargement des infos de l'agent
             //en tant que personne physique
             $resultPers = $this->Physique->getPhysique_ByIDPersonne($_SESSION['idPersonne']);
-            $persPhys;
+            $persPhys = array();
             foreach ($resultPers->result() as $row) {
                 $persPhys['nom'] = $row->Nom_PersPhys;
                 $persPhys['prenom'] = $row->Prenom_PersPhys;
@@ -566,7 +567,7 @@ class AccueilAdmin extends CI_Controller {
 
             //Liste des propriétaires
             $listeProprietaire = array();
-            $listeProprietaire = $this->Personne->getPersonne_ByRole(1, $idAgence)->result_array();
+            $listeProprietaire = $this->Personne->getPersonne_ByRole(4, $idAgence)->result_array();
             $proprietaire['proprietaire'] = $listeProprietaire;
             $info['bien'][] = $proprietaire;
 
@@ -624,7 +625,7 @@ class AccueilAdmin extends CI_Controller {
 
             //Liste des propriétaires
             $listeProprietaire = array();
-            $listeProprietaire = $this->Personne->getPersonne_ByRole(1, $idAgence)->result_array();
+            $listeProprietaire = $this->Personne->getPersonne_ByRole(4, $idAgence)->result_array();
             $groupeBien['proprietaire'] = $listeProprietaire;
 
             //Liste des biens
@@ -646,6 +647,7 @@ class AccueilAdmin extends CI_Controller {
 
         //ENREGISTREMENT DU BIEN
         if (isset($_SESSION['idPersonne'])) {
+			$idAgence = $_SESSION['idAgence'];
 
             $idPersonne = $this->input->post('propriettaireNom');
 
@@ -725,9 +727,9 @@ class AccueilAdmin extends CI_Controller {
 
             //Insertion du Bien
             if ($idImmeuble == 0) {
-                $insertBien = $this->Bien->creerBien($libelleBien, $localisationBien, $dateCreationBien, $nomProprietaire,$idPersonne, $idTypeBien, null, $feuilleCadastrale, $parcelleCadastrale, $categorieCadastrale, $valeurLocataiveCadastrale, $lot, $millieme, $parking, $autresDependance, $cave, $typeLocation, $loyerHC, $charge, $taxeHabitation, $taxeFonciere, $dateAcquisition, $prixAcquisition, $fraisAcquisition, $nomCentre, $adresse1, $adresse2, $codePostal, $ville, $descriptionBien, $notes, $assurance, $dateSouscripAssurance, $dateEcheanceAssurance);
+                $insertBien = $this->Bien->creerBien($idAgence,$libelleBien, $localisationBien, $dateCreationBien, $nomProprietaire,$idPersonne, $idTypeBien, null, $feuilleCadastrale, $parcelleCadastrale, $categorieCadastrale, $valeurLocataiveCadastrale, $lot, $millieme, $parking, $autresDependance, $cave, $typeLocation, $loyerHC, $charge, $taxeHabitation, $taxeFonciere, $dateAcquisition, $prixAcquisition, $fraisAcquisition, $nomCentre, $adresse1, $adresse2, $codePostal, $ville, $descriptionBien, $notes, $assurance, $dateSouscripAssurance, $dateEcheanceAssurance);
             } else {
-                $insertBien = $this->Bien->creerBien($libelleBien, $localisationBien, $dateCreationBien, $nomProprietaire, $idPersonne, $idTypeBien, $idImmeuble, $feuilleCadastrale, $parcelleCadastrale, $categorieCadastrale, $valeurLocataiveCadastrale, $lot, $millieme, $parking, $autresDependance, $cave, $typeLocation, $loyerHC, $charge, $taxeHabitation, $taxeFonciere, $dateAcquisition, $prixAcquisition, $fraisAcquisition, $nomCentre, $adresse1, $adresse2, $codePostal, $ville, $descriptionBien, $notes, $assurance, $dateSouscripAssurance, $dateEcheanceAssurance);
+                $insertBien = $this->Bien->creerBien($idAgence,$libelleBien, $localisationBien, $dateCreationBien, $nomProprietaire, $idPersonne, $idTypeBien, $idImmeuble, $feuilleCadastrale, $parcelleCadastrale, $categorieCadastrale, $valeurLocataiveCadastrale, $lot, $millieme, $parking, $autresDependance, $cave, $typeLocation, $loyerHC, $charge, $taxeHabitation, $taxeFonciere, $dateAcquisition, $prixAcquisition, $fraisAcquisition, $nomCentre, $adresse1, $adresse2, $codePostal, $ville, $descriptionBien, $notes, $assurance, $dateSouscripAssurance, $dateEcheanceAssurance);
             }
             //Recuperation de l'id du bien créé
             $getBien = $this->Bien->getBien($libelleBien, $localisationBien, $dateCreationBien, $nomProprietaire);
@@ -1087,6 +1089,12 @@ class AccueilAdmin extends CI_Controller {
 
     public function MultiplierBien(){
 
+		$nombreDeCopie = $this->input->post('nombreDeCopie');
+
+		for ($i = 1; $i <= $nombreDeCopie ;$i++){
+			$this->creerBien();
+		}
+
 	}
 
     public function dupliquerBiens($idBien) {
@@ -1302,7 +1310,7 @@ class AccueilAdmin extends CI_Controller {
 
             //Liste des propriétaires
             $listeProprietaire = array();
-            $listeProprietaire = $this->Personne->getPersonne_ByRole(1, $idAgence)->result_array();
+            $listeProprietaire = $this->Personne->getPersonne_ByRole(4, $idAgence)->result_array();
             $groupeBien['proprietaire'] = $listeProprietaire;
 
             //Liste des biens
@@ -2558,7 +2566,6 @@ class AccueilAdmin extends CI_Controller {
     public function AddProprietaire() {
         $this->check_session();
         $this->setData();
-
         $this->load->view('administration/header');
         $this->load->view('administration/addProprietaire');
         $this->load->view('administration/menu_footer', $this->data);
@@ -2679,7 +2686,7 @@ class AccueilAdmin extends CI_Controller {
             }
 
             //INSERTION
-            $resultPersRole = $this->Personne_has_role->creerPersonneHasRole($idPersonneCree, $idRoleLocataire);
+            $resultPersRole = $this->Personne_has_role->creerPersonneHasRole($idPersonneCree, $idRoleLocataire,$idAgence);
 
             //Ajout de l'id de l'agence
             $resultUpdateAgence = $this->Personne_has_role->setIdAgence($idAgence, $idPersonneCree);
@@ -3163,7 +3170,7 @@ class AccueilAdmin extends CI_Controller {
                 $idAgence = $_SESSION['idAgence'];
             }
 
-            $reqLocation = $this->Locations->getAllLocation();
+            $reqLocation = $this->Locations->getAllLocation($idAgence);
 
             $Location = $reqLocation->result_array();
             //var_dump($Location);

@@ -84,10 +84,11 @@
                                                                 <label class="col-md-3 control-label">BIEN</label>
                                                                 <div class="col-md-9"><p class="form-control-static text-main text-main"><?php echo $locationInfo[0]['bienLibelle'] ?></p></div>
                                                             </div>
+
                                                             <div class="form-group">
                                                                 <label class="col-md-3 control-label">LOCATAIRE</label>
                                                                 <div class="col-md-9"><p class="form-control-static text-main text-main">
-                                                                        <?php echo $locationInfo[0]['Nom_PersPhys'] . ' ' . $locationInfo[0]['Prenom_PersPhys'] ?>
+                                                                        <?php echo $locationInfo[0]['nom'] ?>
                                                                     </p></div>
                                                             </div>
                                                             <div class="form-group">

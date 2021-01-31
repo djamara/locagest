@@ -20,10 +20,10 @@ class Personne_has_role extends CI_Model {
      * @param $role_idrole
      * @return Vrai ou Faux
      */
-    public function creerPersonneHasRole($Personne_idPersonne, $role_idrole) {
+    public function creerPersonneHasRole($Personne_idPersonne, $role_idrole,$idAgence) {
 
-        $sqlInsertPersonneRole = "INSERT INTO personne_has_role(Personne_idPersonne, role_idrole) VALUES(?, ?)";
-        $resultPersRole = $this->db->query($sqlInsertPersonneRole, array($Personne_idPersonne, $role_idrole));
+        $sqlInsertPersonneRole = "INSERT INTO personne_has_role(Personne_idPersonne, role_idrole,idAgence) VALUES(?,?,?)";
+        $resultPersRole = $this->db->query($sqlInsertPersonneRole, array($Personne_idPersonne, $role_idrole,$idAgence));
 
         return $resultPersRole;
     }

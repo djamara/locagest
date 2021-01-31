@@ -98,7 +98,7 @@
                                                                 //var_dump($bien);
 
                                                                 for ($i = 0; $i < sizeof($proprietaire); $i++) {
-                                                                    echo '<option value="' . $proprietaire[$i]['idPersonne'] . '"' . ($groupeBien['idPersonne'] == $proprietaire[$i]['idPersonne'] ? 'selected' : '') . '>' . $proprietaire[$i]['Nom_PersPhys'] . " " . $proprietaire[$i]['Prenom_PersPhys'] . '</option>';
+                                                                    echo '<option value="' . $proprietaire[$i]['idPersonne'] . '"' . ($groupeBien['idPersonne'] == $proprietaire[$i]['idPersonne'] ? 'selected' : '') . '>' . $proprietaire[$i]['Nom_PersPhys'] . " " . $proprietaire[$i]['Prenom_PersPhys'] ." ".$proprietaire[$i]["DenomPers_Morale"]. '</option>';
                                                                 }
                                                                 ?>
 

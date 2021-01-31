@@ -395,7 +395,7 @@
                         <!--Category name-->
                         <li class="list-header">Menu</li>
                         
-                        <li style="<?php if(isset($_SESSION['idAgence'])) echo 'display:none'; else echo 'display:block'; ?>">
+                        <li style="<?php if(!isset($_SESSION['idAgence'])) echo 'display:none'; else echo 'display:block'; ?>">
                             <a href="<?php echo site_url() ?>/AccueilAdmin/GestAgents">
                                 <i class="fa fa-user"></i>
                                 <span class="menu-title">

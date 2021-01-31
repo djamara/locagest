@@ -42,7 +42,7 @@
                 <!--===================================================-->
                 <div id="page-content">
 
-                    <form class="form-horizontal" action="<?php echo site_url() ?>/AccueilAdmin/creerBien" id="form-bien" method="post" enctype="multipart/form-data">
+                    <form class="form-horizontal" action="<?php echo site_url() ?>/AccueilAdmin/MultiplierBien" id="form-bien" method="post" enctype="multipart/form-data">
                         <!--Default Tabs (Left Aligned)-->
                         <!--===================================================-->
                         <div class="tab-base">
@@ -81,7 +81,7 @@
 														<div class="form-group">
 															<label class="col-sm-3 control-label" for="demo-hor-inputpass">NOMBRE DE COPIE </label>
 															<div class="col-sm-8">
-																<input type="text" placeholder="Saisissez le nombre de copie" id="nombreDeCopie" class="form-control"  name="nombreDeCopie">
+																<input type="text" required="" placeholder="Saisissez le nombre de copie" id="nombreDeCopie" class="form-control"  name="nombreDeCopie">
 															</div>
 														</div>
 												</div>
@@ -806,9 +806,9 @@
 
             <!-- Visible when footer positions are static -->
             <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-            <div class="hide-fixed pull-right pad-rgt">
+            <!--<div class="hide-fixed pull-right pad-rgt">
                 14GB of <strong>512GB</strong> Free.
-            </div>
+            </div>-->
 
 
 
@@ -816,7 +816,7 @@
             <!-- Remove the class "show-fixed" and "hide-fixed" to make the content always appears. -->
             <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
-            <p class="pad-lft">&#0169; 2017 Your Company</p>
+            <p class="pad-lft">&#0169; 2020 Your Company</p>
 
 
 
@@ -868,3 +868,9 @@
 
         console.log('Le tableau est :' + tableauProprietaire);
     </script>
+	<script type="text/javascript">
+		var redirect = "<?php echo site_url() . '/AccueilAdmin/GestBiens'; ?>";
+		var redirectLogin = "<?php echo site_url() . '/login/login'; ?>";
+
+		console.log("Redirection "+redirect);
+	</script>

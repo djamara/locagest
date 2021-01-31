@@ -846,3 +846,9 @@
 
         console.log('Le tableau est :' + tableauProprietaire);
     </script>
+	<script type="text/javascript">
+		var redirect = "<?php echo site_url() . '/AccueilAdmin/GestBiens'; ?>";
+		var redirectLogin = "<?php echo site_url() . '/login/login'; ?>";
+
+		console.log("Redirection "+redirect);
+	</script>

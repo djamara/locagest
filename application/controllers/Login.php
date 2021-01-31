@@ -56,7 +56,7 @@ class Login extends CI_Controller {
             }
 
             //INSERTION
-            $resultPersRole = $this->Personne_has_role->creerPersonneHasRole($idPersonneCree, $idRoleAgence);
+            $resultPersRole = $this->Personne_has_role->creerPersonneHasRole($idPersonneCree, $idRoleAgence,$idPersonneCree);
 
             //Insertion dans la table USER
             $resultUser = $this->User->creerUser($idPersonneCree, $username, $motdepasse, $email, null);
@@ -146,7 +146,7 @@ class Login extends CI_Controller {
                 $idAgence = $row->idAgence;
             }
 
-            if ($idRole == 3) {
+            if ($idRole == 3) { // le role 3 est celui de l'agence
                 //Recuperation du nom et du prenom
                 $resultPersonne = $this->Physique->getPhysique_ByIDPersonne($idPersonne);
                 foreach ($resultPersonne->result() as $row) {

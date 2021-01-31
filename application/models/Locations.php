@@ -45,7 +45,7 @@ class Locations extends CI_Model{
         return $resultset;
     }
     
-    public function getAllLocation(){
+    public function getAllLocation($idAgence){
         
         /*$requete = "SELECT * FROM bien,typebien,persphys,personne_loue_bien,personne
         WHERE bien.idbien = personne_loue_bien.bien_idbien
@@ -62,9 +62,10 @@ class Locations extends CI_Model{
 					FROM personne_loue_bien
 					INNER JOIN bien ON personne_loue_bien.bien_idbien = bien.idbien
 					INNER JOIN typebien ON typebien.idTypeBien = bien.TypeBien_idTypeBien
-					INNER JOIN personne ON personne.idPersonne = personne_loue_bien.Personne_idPersonne";
+					INNER JOIN personne ON personne.idPersonne = personne_loue_bien.Personne_idPersonne
+					WHERE bien.idAgence = ?";
         
-        $resultset = $this->db->query($requete);
+        $resultset = $this->db->query($requete,array($idAgence));
         
         return $resultset;
     }
@@ -105,10 +106,14 @@ class Locations extends CI_Model{
         return $resultset;
     }
     
-      public function getNbLocation() {
-        $sql = "select COUNT(idlocation) as nbLocation from personne_loue_bien WHERE topValideLocation=1";
+      public function getNbLocation($idAgence) {
+        //$sql = "select COUNT(idlocation) as nbLocation from personne_loue_bien WHERE  topValideLocation=1";
+		  $sql = "select COUNT(idlocation) as nbLocation from personne_loue_bien 
+				   INNER JOIN personne_has_role 
+				   ON personne_loue_bien.Personne_idPersonne = personne_has_role.Personne_idPersonne
+				   WHERE personne_has_role.idAgence = ? AND topValideLocation=1" ;
 
-        $resultNbLocation = $this->db->query($sql);
+        $resultNbLocation = $this->db->query($sql,array($idAgence));
 
         foreach ($resultNbLocation->result() as $row) {
             $retour = $row->nbLocation;

@@ -304,10 +304,16 @@ $(document).ready(function () {
                     $.niftyNoty({
                         type: 'success',
                         container: 'floating',
-                        title: 'BIEN MODIFIÉ',
+                        title: 'INFORMATION MISE A JOUR',
                         message: 'Données enregistrées avec succès',
                         closeBtn: true,
-                        timer: 3000
+                        timer: 3000,
+						onHidden: function () {
+							//Rechargement de la page
+							//var $url = "http://localhost/Locagest/index.php/AccueilAdmin/GestBiens";
+							var $url = redirect;
+							window.location.href = $url;
+						}
                     });
                 }
             },
